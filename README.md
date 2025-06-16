@@ -27,10 +27,34 @@ pip install scapy torch scikit-learn requests pandas pyfiglet pyyaml subprocess
 
 4. Настройте `config.yaml`
 
-```
-Определите какие модели хотите использовать: CNN, LSTM, RandomForest, K-Means.
-Определите настройки сети: сетевой адаптер, порты, тип протокола, минимальная требуемая скорость, минимальное кол-во пакетов
-По желанию установите вебхук, телеграм или email оповещения для получение статистики.
+```yaml
+models:
+  lstm: true            # Useful for specific attacks
+  cnn: false            # Useful for specific attacks less resource intensive
+  random_forest: true   # Useful for UDP-Flood 
+  k_means: false        # Useful for DNS-Amplification
+
+network_filters:
+  net_adapter: "eth0"
+  ports: [22, 80, 443]
+  protocol: "Both"  # TCP, UDP, Both
+  minimum_traffic_speed: 100.0  # Mbps
+  minimum_packets: 50
+
+notifications:
+  discord_webhook: "https://discord.com/api/webhooks/1037300794409627698"
+  telegram_token: "123456789:ABCDefGHIJKLMNOPQrstuvwxYZ" #Example
+  telegrams_to_send:
+    - "@channel1"
+    - "@user2"
+  email_smtp_server: ""
+  email_smtp_port: 587
+  email_username: ""
+  email_password: ""
+  email_recipient: ""
+  emails_to_send:
+    - "admin@example.com"
+    - "security@example.org"
 ```
 
 5. Запустите программу командой `py app.py` или `python3 app.py`
